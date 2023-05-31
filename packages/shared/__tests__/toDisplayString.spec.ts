@@ -1,7 +1,6 @@
 /**
  * @vitest-environment jsdom
  */
-import { computed, ref } from '@vue/reactivity'
 import { toDisplayString } from '../src'
 
 describe('toDisplayString', () => {
@@ -62,17 +61,6 @@ describe('toDisplayString', () => {
   3
 ]`
     )
-  })
-
-  test('refs', () => {
-    const n = ref(1)
-    const np = computed(() => n.value + 1)
-    expect(
-      toDisplayString({
-        n,
-        np
-      })
-    ).toBe(JSON.stringify({ n: 1, np: 2 }, null, 2))
   })
 
   test('objects with custom toString', () => {

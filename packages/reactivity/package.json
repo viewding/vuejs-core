@@ -1,7 +1,7 @@
 {
-  "name": "@vue/reactivity",
+  "name": "@viewding/reactivity",
   "version": "3.3.4",
-  "description": "@vue/reactivity",
+  "description": "@viewding/reactivity",
   "main": "index.js",
   "module": "dist/reactivity.esm-bundler.js",
   "types": "dist/reactivity.d.ts",
@@ -14,7 +14,7 @@
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vuejs/core.git",
+    "url": "git+https://github.com/viewding/vuejs-core.git",
     "directory": "packages/reactivity"
   },
   "buildOptions": {
@@ -35,7 +35,8 @@
     "url": "https://github.com/vuejs/core/issues"
   },
   "homepage": "https://github.com/vuejs/core/tree/main/packages/reactivity#readme",
-  "dependencies": {
-    "@vue/shared": "3.3.4"
+  "devDependencies": {
+    "rollup": "^3.23.0",
+    "rollup-plugin-dts": "^5.3.0"
   }
 }

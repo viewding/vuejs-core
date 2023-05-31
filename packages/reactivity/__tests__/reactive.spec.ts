@@ -1,6 +1,4 @@
-import { ref, isRef } from '../src/ref'
 import { reactive, isReactive, toRaw, markRaw } from '../src/reactive'
-import { computed } from '../src/computed'
 import { effect } from '../src/effect'
 
 describe('reactivity/reactive', () => {
@@ -171,45 +169,6 @@ describe('reactivity/reactive', () => {
     const raw = toRaw(obj)
     expect(raw).toBe(obj)
     expect(raw).not.toBe(toRaw(original))
-  })
-
-  test('should not unwrap Ref<T>', () => {
-    const observedNumberRef = reactive(ref(1))
-    const observedObjectRef = reactive(ref({ foo: 1 }))
-
-    expect(isRef(observedNumberRef)).toBe(true)
-    expect(isRef(observedObjectRef)).toBe(true)
-  })
-
-  test('should unwrap computed refs', () => {
-    // readonly
-    const a = computed(() => 1)
-    // writable
-    const b = computed({
-      get: () => 1,
-      set: () => {}
-    })
-    const obj = reactive({ a, b })
-    // check type
-    obj.a + 1
-    obj.b + 1
-    expect(typeof obj.a).toBe(`number`)
-    expect(typeof obj.b).toBe(`number`)
-  })
-
-  test('should allow setting property from a ref to another ref', () => {
-    const foo = ref(0)
-    const bar = ref(1)
-    const observed = reactive({ a: foo })
-    const dummy = computed(() => observed.a)
-    expect(dummy.value).toBe(0)
-
-    // @ts-ignore
-    observed.a = bar
-    expect(dummy.value).toBe(1)
-
-    bar.value++
-    expect(dummy.value).toBe(2)
   })
 
   test('non-observable values', () => {

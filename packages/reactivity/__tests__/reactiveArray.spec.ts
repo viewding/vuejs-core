@@ -1,6 +1,5 @@
 import { vi } from 'vitest'
-import { reactive, isReactive, toRaw } from '../src/reactive'
-import { ref, isRef } from '../src/ref'
+import { reactive, isReactive } from '../src/reactive'
 import { effect } from '../src/effect'
 
 describe('reactivity/reactive/Array', () => {
@@ -141,34 +140,6 @@ describe('reactivity/reactive/Array', () => {
     expect(length).toBe('0')
     array.push(1)
     expect(length).toBe('01')
-  })
-
-  describe('Array methods w/ refs', () => {
-    let original: any[]
-    beforeEach(() => {
-      original = reactive([1, ref(2)])
-    })
-
-    // read + copy
-    test('read only copy methods', () => {
-      const raw = original.concat([3, ref(4)])
-      expect(isRef(raw[1])).toBe(true)
-      expect(isRef(raw[3])).toBe(true)
-    })
-
-    // read + write
-    test('read + write mutating methods', () => {
-      const res = original.copyWithin(0, 1, 2)
-      const raw = toRaw(res)
-      expect(isRef(raw[0])).toBe(true)
-      expect(isRef(raw[1])).toBe(true)
-    })
-
-    test('read + identity', () => {
-      const ref = original[1]
-      expect(ref).toBe(toRaw(original)[1])
-      expect(original.indexOf(ref)).toBe(1)
-    })
   })
 
   describe('Array subclasses', () => {
