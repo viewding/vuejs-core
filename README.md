@@ -1,5 +1,20 @@
 # vuejs/core [![npm](https://img.shields.io/npm/v/vue.svg)](https://www.npmjs.com/package/vue) [![build status](https://github.com/vuejs/core/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/vuejs/core/actions/workflows/ci.yml)
 
+## 关于 viewding/vuejs-core
+
+viewding/vuejs-core forked from [vuejs/core](https://github.com/vuejs/core), forked 之后，仅保留了packages下的两个包：reactivity和shared。
+
+虽然vue提供了单独使用reactivity的包：[@vue/reactivity](https://www.npmjs.com/package/@vue/reactivity)。但是，在viewding中不打算使用computed和ref的功能，所以，fork出来，专门定制一个仅包含更少功能的版本。
+
+在viewding/vuejs-core/packages/reactivity目录下执行下述命令打包：
+
+```
+pnpm install
+rollup -c rollup.config.mjs
+```
+
+npm：[@viewding/reactivity](https://www.npmjs.com/package/@viewding/reactivity)
+
 ## Getting Started
 
 Please follow the documentation at [vuejs.org](https://vuejs.org/)!

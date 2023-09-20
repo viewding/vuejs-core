@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "temp",
     "sourceMap": false,
     "target": "es2016",
     "newLine": "LF",
@@ -21,9 +20,11 @@
     "lib": ["esnext", "dom"],
     "types": ["vitest/globals", "puppeteer", "node"],
     "rootDir": "../",
+    "outDir": "./dist",
+    "declaration": true,
     "paths": {
       "@vue/shared": ["../shared/src"]
     }
   },
-  "include": ["../global.d.ts", "../reactivity/src/*.ts"]
+  "include": ["../global.d.ts", "src/*.ts"]
 }
