@@ -26,5 +26,5 @@
       "@vue/shared": ["../shared/src"]
     }
   },
-  "include": ["../global.d.ts", "src/*.ts"]
+  "include": ["src/*.ts"]
 }

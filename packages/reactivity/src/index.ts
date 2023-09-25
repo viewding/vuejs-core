@@ -1,4 +1,8 @@
 export {
+  reactiveRef,
+  type ReactiveRef
+} from './reactiveRef'
+export {
   reactive,
   readonly,
   isReactive,
@@ -15,6 +19,15 @@ export {
   type ShallowReactive
 } from './reactive'
 
+export {
+  computed,
+  type ComputedRef,
+  type WritableComputedRef,
+  type WritableComputedOptions,
+  type ComputedGetter,
+  type ComputedSetter
+} from './computed'
+export { deferredComputed } from './deferredComputed'
 export {
   effect,
   stop,

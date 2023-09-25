@@ -9,52 +9,9 @@ import {
   mutableCollectionHandlers,
   readonlyCollectionHandlers,
   shallowCollectionHandlers,
-  shallowReadonlyCollectionHandlers,
-  type CollectionTypes
+  shallowReadonlyCollectionHandlers
 } from './collectionHandlers'
-// import type { UnwrapRefSimple, Ref, RawSymbol } from './ref'
-
-export declare const RawSymbol: unique symbol
-
-// corner case when use narrows type
-// Ex. type RelativePath = string & { __brand: unknown }
-// RelativePath extends object -> true
-type BaseTypes = string | number | boolean
-
-/**
- * This is a special exported interface for other packages to declare
- * additional types that should bail out for ref unwrapping. For example
- * \@vue/runtime-dom can declare it like so in its d.ts:
- *
- * ``` ts
- * declare module '@vue/reactivity' {
- *   export interface RefUnwrapBailTypes {
- *     runtimeDOMBailTypes: Node | Window
- *   }
- * }
- * ```
- *
- * Note that api-extractor somehow refuses to include `declare module`
- * augmentations in its generated d.ts, so we have to manually append them
- * to the final generated d.ts in our build process.
- */
-export interface RefUnwrapBailTypes {}
-
-export type UnwrapRefSimple<T> = T extends
-  | Function
-  | CollectionTypes
-  | BaseTypes
-  // | Ref
-  | RefUnwrapBailTypes[keyof RefUnwrapBailTypes]
-  | { [RawSymbol]?: true }
-  ? T
-  : T extends ReadonlyArray<any>
-  ? { [K in keyof T]: UnwrapRefSimple<T[K]> }
-  : T extends object & { [ShallowReactiveMarker]?: never }
-  ? {
-      [P in keyof T]: T[P] // P extends symbol ? T[P] : UnwrapRef<T[P]>
-    }
-  : T
+import type { RawSymbol } from './reactiveRef'
 
 export const enum ReactiveFlags {
   SKIP = '__v_skip',
@@ -104,9 +61,6 @@ function getTargetType(value: Target) {
     : targetTypeMap(toRawType(value))
 }
 
-// only unwrap nested ref
-// export type UnwrapNestedRefs<T> = T extends Ref ? T : UnwrapRefSimple<T>
-
 /**
  * Returns a reactive proxy of the object.
  *
@@ -122,7 +76,7 @@ function getTargetType(value: Target) {
  * @param target - The source object.
  * @see {@link https://vuejs.org/api/reactivity-core.html#reactive}
  */
-export function reactive<T extends object>(target: T): UnwrapRefSimple<T>
+export function reactive<T extends object>(target: T): T
 export function reactive(target: object) {
   // if trying to observe a readonly proxy, return the readonly version.
   if (isReadonly(target)) {
@@ -238,7 +192,7 @@ export type DeepReadonly<T> = T extends Builtin
  */
 export function readonly<T extends object>(
   target: T
-): DeepReadonly<UnwrapRefSimple<T>> {
+): DeepReadonly<T> {
   return createReactiveObject(
     target,
     true,

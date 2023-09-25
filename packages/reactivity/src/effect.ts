@@ -9,7 +9,7 @@ import {
   newTracked,
   wasTracked
 } from './dep'
-// import { ComputedRefImpl } from './computed'
+import { ComputedRefImpl } from './computed'
 
 // The main WeakMap that stores {target -> key -> dep} connections.
 // Conceptually, it's easier to think of a dependency as a Dep class
@@ -55,11 +55,11 @@ export class ReactiveEffect<T = any> {
   deps: Dep[] = []
   parent: ReactiveEffect | undefined = undefined
 
-  // /**
-  //  * Can be attached after creation
-  //  * @internal
-  //  */
-  // computed?: ComputedRefImpl<T>
+  /**
+   * Can be attached after creation
+   * @internal
+   */
+  computed?: ComputedRefImpl<T>
   /**
    * @internal
    */
@@ -396,18 +396,15 @@ export function triggerEffects(
 ) {
   // spread into array for stabilization
   const effects = isArray(dep) ? dep : [...dep]
-  // for (const effect of effects) {
-  //   if (effect.computed) {
-  //     triggerEffect(effect, debuggerEventExtraInfo)
-  //   }
-  // }
-  // for (const effect of effects) {
-  //   if (!effect.computed) {
-  //     triggerEffect(effect, debuggerEventExtraInfo)
-  //   }
-  // }
   for (const effect of effects) {
-    triggerEffect(effect, debuggerEventExtraInfo)
+    if (effect.computed) {
+      triggerEffect(effect, debuggerEventExtraInfo)
+    }
+  }
+  for (const effect of effects) {
+    if (!effect.computed) {
+      triggerEffect(effect, debuggerEventExtraInfo)
+    }
   }
 }
 
