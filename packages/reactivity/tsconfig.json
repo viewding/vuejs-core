@@ -20,7 +20,7 @@
     "lib": ["esnext", "dom"],
     "types": ["vitest/globals", "puppeteer", "node"],
     "rootDir": "../",
-    "outDir": "./dist",
+    "outDir": "temp",
     "declaration": true,
     "paths": {
       "@vue/shared": ["../shared/src"]

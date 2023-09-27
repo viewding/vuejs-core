@@ -1,10 +1,13 @@
 {
   "name": "@viewding/reactivity",
-  "version": "3.3.4-20230921",
+  "version": "3.3.4-20230927",
   "description": "@viewding/reactivity",
-  "main": "dist/index.esm.min.js",
+  "main": "dist/reactivity.js",
   "type": "module",
-  "types": "dist/reactivity/src/index.d.ts",
+  "types": "dist/reactivity.d.ts",
+  "scripts":{
+    "build": "rollup -c rollup.config.js"
+  },
   "files": [
     "index.js",
     "src",
@@ -41,6 +44,7 @@
     "esbuild": "^0.19.3",
     "puppeteer": "^21.3.1",
     "rollup": "^3.23.0",
+    "rollup-plugin-dts": "^6.0.2",
     "rollup-plugin-esbuild": "^6.0.1",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
